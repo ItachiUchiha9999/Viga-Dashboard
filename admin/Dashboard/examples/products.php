@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Panel Admin - Customers</title>
+    <title>Panel Admin - Products</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -29,7 +29,7 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                        Customers
+                        Products
                     </a>
                 </div>
                 <ul class="nav">
@@ -155,17 +155,17 @@
 
             <!--Table-->
             <div class="container my-5">
-                <h2>List of Customers</h2>
-                <a href="../examples/create.php" class="btn btn-primary" role="button">New Customers</a>
+                <h2>List of Products</h2>
+                <a href="../examples/createProducts.php" class="btn btn-primary" role="button">New Products</a>
                 <br>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Brand</th>
+                            <th>Supplier</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -177,7 +177,7 @@
                             die("No se pudo restablecer la conexion con la base de datos");
                         }
 
-                        $sql = "SELECT * FROM customers";
+                        $sql = "SELECT * FROM products";
                         $result = $conexion->query($sql);
                         if (!$result) {
                             die("Invalid query: " . $conexion->errorInfo()[2]);
@@ -185,14 +185,14 @@
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                             echo "
                             <tr>
-                                <td>$row[id_customers]</td>
-                                <td>$row[name_custo]</td>
-                                <td>$row[last_name]</td>
-                                <td>$row[phone]</td>
-                                <td>$row[email]</td>
+                                <td>$row[id_products]</td>
+                                <td>$row[name_prod]</td>
+                                <td>$row[price]</td>
+                                <td>$row[brand_id]</td>
+                                <td>$row[supp_id]</td>
                                 <td>
-                                    <a href='../examples/edit.php?id=$row[id_customers]' class='btn btn-primary btn-sm'>Edit</a>
-                                    <a href='../examples/delete.php?id=$row[id_customers]' class='btn btn-danger btn-sm'>Delete</a>
+                                    <a href='../examples/editProducts.php?id=$row[id_products]' class='btn btn-primary btn-sm'>Edit</a>
+                                    <a href='../examples/deletePRoducts.php?id=$row[id_products]' class='btn btn-danger btn-sm'>Delete</a>
                                 </td>
                             </tr>
                             ";

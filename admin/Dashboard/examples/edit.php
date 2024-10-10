@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="dashboard.html">
+                        <a class="nav-link" href="../examples/dashboard.html">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Home</p>
                         </a>
@@ -120,13 +120,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/typography.html">
+                        <a class="nav-link" href="../examples/products.php">
                             <i class="nc-icon nc-app"></i>
                             <p>Products</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/icons.html">
+                        <a class="nav-link" href="../examples/suppliers.php">
                             <i class="nc-icon nc-delivery-fast"></i>
                             <p>Suppliers</p>
                         </a>

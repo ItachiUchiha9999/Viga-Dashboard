@@ -1,3 +1,71 @@
+<?php
+
+require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
+$conexion = Conexion::Conectar();
+if (!$conexion) {
+    die("No se pudo restablecer la conexion con la base de datos");
+}
+
+$id = "";
+$name = "";
+$price = "";
+$brand = "";
+$supp = "";
+
+$errorMessage = "";
+$successMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (!isset($_GET["id"])) {
+        header("Location: ../examples/products.php");
+        exit;
+    }
+    $id = $_GET["id"];
+    $sql = "SELECT * FROM products WHERE id_products=$id";
+    $result = $conexion->query($sql);
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) {
+        header("Location: ../examples/products.php");
+        exit;
+    }
+
+    $name = $row["name_prod"];
+    $price = $row["price"];
+    $brand = $row["brand_id"];
+    $supp = $row["supp_id"];
+
+}else {
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $price = $_POST["price"];
+    $brand = $_POST["brand"];
+    $supp = $_POST["supp"];
+
+    do {
+        if (empty($id) || empty($name) || empty($price) || empty($brand) || empty($supp)) {
+            $errorMessage = "All the field are required";
+            break;
+        }
+
+        $sql = "UPDATE products 
+                SET name_prod = '$name' , price = '$price' , brand_id = '$brand' , supp_id = '$supp'  
+                WHERE id_products = $id";
+        $result = $conexion->query($sql);
+        if (!$result) {
+            $errorMessage = "Invalid query" . $conexion->errorInfo();
+            break;
+        }
+
+        $successMessage = "Client update correctly";
+
+        header("Location: ../examples/products.php");
+        exit;
+
+    } while (false);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,54 +221,74 @@
             </nav>
             <!-- End Navbar -->
 
-            <!--Table-->
+            <!--Create customers-->
             <div class="container my-5">
-                <h2>List of Customers</h2>
-                <a href="../examples/create.php" class="btn btn-primary" role="button">New Customers</a>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
+                <h2>New Products</h2>
 
-                        $conexion = Conexion::Conectar();
-                        if (!$conexion) {
-                            die("No se pudo restablecer la conexion con la base de datos");
-                        }
+                <?php
+                if (!empty($errorMessage)) {
+                    echo "
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                        <strong>$errorMessage</strong>
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>
+                    ";
+                }
+                ?>
 
-                        $sql = "SELECT * FROM customers";
-                        $result = $conexion->query($sql);
-                        if (!$result) {
-                            die("Invalid query: " . $conexion->errorInfo()[2]);
-                        }
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            echo "
-                            <tr>
-                                <td>$row[id_customers]</td>
-                                <td>$row[name_custo]</td>
-                                <td>$row[last_name]</td>
-                                <td>$row[phone]</td>
-                                <td>$row[email]</td>
-                                <td>
-                                    <a href='../examples/edit.php?id=$row[id_customers]' class='btn btn-primary btn-sm'>Edit</a>
-                                    <a href='../examples/delete.php?id=$row[id_customers]' class='btn btn-danger btn-sm'>Delete</a>
-                                </td>
-                            </tr>
-                            ";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <form action="" method="post">
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-3 col-form-label">Product</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-3 col-form-label">Price</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-3 col-form-label">Brand</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="brand" value="<?php echo $brand; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-3 col-form-label">Supplier</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="supp" value="<?php echo $supp; ?>">
+                        </div>
+                    </div>
+
+                    <?php
+                    if (!empty($successMessage)) {
+                        echo "
+                        <div class=\"row mb-3\">
+                            <div class=\"offset-sm-3 col-sm-6\">
+                                <div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
+                                    <strong>$successMessage</strong>
+                                    <button type=\"button\" class=\"btn-close\" data-bs-dismiss='alert' aria-label=\"Close\"></button>
+                                </div>
+                            </div>
+                        </div>
+                        ";
+                    }
+                    ?>
+
+                    <div class="row mb-3">
+                        <div class="offset-sm-3 col-sm-3 d-grid">
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-3 d-grid">
+                            <a href="../examples/products.php" class="btn btn-outline-primary" role="button">Cancel</a>
+                        </div>
+                    </div>
+                </form>
             </div>
+
 
             <!--Footer-->
             <footer class="footer">

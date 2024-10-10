@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Panel Admin - Customers</title>
+    <title>Panel Admin - Suppliers</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -29,7 +29,7 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                        Customers
+                        Suppliers
                     </a>
                 </div>
                 <ul class="nav">
@@ -155,15 +155,15 @@
 
             <!--Table-->
             <div class="container my-5">
-                <h2>List of Customers</h2>
-                <a href="../examples/create.php" class="btn btn-primary" role="button">New Customers</a>
+                <h2>List of Products</h2>
+                <a href="../examples/create.php" class="btn btn-primary" role="button">New Products</a>
                 <br>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
+                            <th>Suppliers Name</th>
+                            <th>Direction</th>
                             <th>Phone</th>
                             <th>Email</th>
                         </tr>
@@ -185,14 +185,14 @@
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                             echo "
                             <tr>
-                                <td>$row[id_customers]</td>
-                                <td>$row[name_custo]</td>
-                                <td>$row[last_name]</td>
+                                <td>$row[id_supp]</td>
+                                <td>$row[name_supp]</td>
+                                <td>$row[direction]</td>
                                 <td>$row[phone]</td>
                                 <td>$row[email]</td>
                                 <td>
-                                    <a href='../examples/edit.php?id=$row[id_customers]' class='btn btn-primary btn-sm'>Edit</a>
-                                    <a href='../examples/delete.php?id=$row[id_customers]' class='btn btn-danger btn-sm'>Delete</a>
+                                    <a href='../examples/edit.php?id=$row[id_supp]' class='btn btn-primary btn-sm'>Edit</a>
+                                    <a href='../examples/delete.php?id=$row[id_supp]' class='btn btn-danger btn-sm'>Delete</a>
                                 </td>
                             </tr>
                             ";
