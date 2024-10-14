@@ -16,16 +16,12 @@
     <link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/css/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
 
 <body>
     <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/sidebar-5.jpg">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
@@ -34,7 +30,7 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../examples/dashboard.html">
+                        <a class="nav-link" href="../examples/dashboard.php">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Home</p>
                         </a>
@@ -58,9 +54,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/suppliers.php">
+                        <a class="nav-link" href="../examples/report.php">
                             <i class="nc-icon nc-delivery-fast"></i>
-                            <p>Suppliers</p>
+                            <p>Reports</p>
                         </a>
                     </li>
                     <li>
@@ -158,7 +154,7 @@
                 <h2>List of Products</h2>
                 <a href="../examples/createProducts.php" class="btn btn-primary" role="button">New Products</a>
                 <br>
-                <table class="table">
+                <table id="productsTable" class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -233,30 +229,32 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            <a href="http://www.creative-tim.com">Panel Admin</a>, Derechos reservados
+                            <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
                         </p>
                     </nav>
                 </div>
             </footer>
         </div>
     </div>
-
+    <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!-- Chart JS -->
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+    <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+    <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/demo.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        });
+    </script>
 </body>
-<!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="../assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!--  Chartist Plugin  -->
-<script src="../assets/js/plugins/chartist.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="../assets/js/plugins/bootstrap-notify.js"></script>
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
-<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/js/demo.js"></script>
 
 </html>

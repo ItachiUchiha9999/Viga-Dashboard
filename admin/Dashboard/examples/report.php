@@ -1,51 +1,37 @@
 <?php
-
 require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
+
 $conexion = Conexion::Conectar();
 if (!$conexion) {
-    die ("No se pudo restablecer la conexion con la base de datos");
+    die("No se pudo restablecer la conexion con la base de datos");
 }
 
-$name = "";
-$price = "";
-$brand = "";
-$supp = "";
+// Compras por cliente
+$sql = "SELECT Customers.name_custo, Customers.last_name, SUM(Shop.total) as total_spent 
+        FROM Shop 
+        JOIN Customers ON Shop.customers_id = Customers.id_customers 
+        GROUP BY Customers.id_customers";
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$client_purchases = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$errorMessage = "";
-$successMessage = "";
+// Productos más vendidos
+$sql = "SELECT Products.name_prod, SUM(Shop.total) as total_revenue 
+        FROM Shop 
+        JOIN Products ON Shop.products_id = Products.id_products 
+        GROUP BY Products.id_products";
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$top_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST["name"];
-    $price = $_POST["price"];
-    $brand = $_POST["brand"];
-    $supp = $_POST["supp"];
-
-    do {
-        if (empty($name) || empty($price) || empty($brand) || empty($supp)) {
-            $errorMessage = "All the field are required";
-            break;
-        }
-
-        $sql = "INSERT INTO products (name_prod, price, brand_id, supp_id)
-                VALUES ('$name','$price','$brand','$supp')";
-        $result = $conexion->query($sql);
-        if (!$result) {
-            $errorMessage = "Invalid query" . $conexion->errorInfo();
-            break;
-        }
-
-        $name = "";
-        $price = "";
-        $brand = "";
-        $supp = "";
-
-        $successMessage = "Customer added correctly";
-
-        header("Location: ../examples/products.php");
-        exit;
-
-    } while (false);
-}
+// Recaudación por producto
+$sql = "SELECT Products.name_prod, SUM(Shop.total) as total_revenue 
+        FROM Shop 
+        JOIN Products ON Shop.products_id = Products.id_products 
+        GROUP BY Products.id_products";
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+$product_revenue = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/css/demo.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -203,129 +194,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </nav>
             <!-- End Navbar -->
 
-            <!--Create customers-->
-            <?php
-            if (!empty($errorMessage)) {
-                echo "
-                <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                    <strong>$errorMessage</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>
-                ";
-            }
+            <!--Table-->
+            <div class="container">
+                <h2>Reports</h2>
 
-            ?>
+                <h3>Purchases by Customers</h3>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Client Last Name</th>
+                            <th>Total Spent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($client_purchases as $purchase): ?>
+                            <tr>
+                                <td><?php echo $purchase['name_custo']; ?></td>
+                                <td><?php echo $purchase['last_name']; ?></td>
+                                <td><?php echo $purchase['total_spent']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
 
-            <div class="container my-5">
-                <h2>New Products</h2>
-                <form action="" method="post">
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Product</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Price</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Brand</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="brand" value="<?php echo $brand; ?>">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Supplier</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="supp" value="<?php echo $supp; ?>">
-                        </div>
-                    </div>
+                <h3>Top Selling Products</h3>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($top_products as $product): ?>
+                            <tr>
+                                <td><?php echo $product['name_prod']; ?></td>
+                                <td><?php echo $product['total_revenue']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
 
-                    <?php
-                    if (!empty($successMessage)) {
-                        echo "
-                        <div class=\"row mb-3\">
-                            <div class=\"offset-sm-3 col-sm-6\">
-                                <div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
-                                    <strong>$successMessage</strong>
-                                    <button type=\"button\" class=\"btn-close\" data-bs-dismiss='alert' aria-label=\"Close\"></button>
-                                </div>
-                            </div>
-                        </div>
-                        ";
-                    }
-                    ?>
-
-                    <div class="row mb-3">
-                        <div class="offset-sm-3 col-sm-3 d-grid">
-                            <button class="btn btn-primary">Submit</button>
-                        </div>
-                        <div class="col-sm-3 d-grid">
-                            <a href="../examples/products.php" class="btn btn-outline-primary" role="button">Cancel</a>
-                        </div>
-                    </div>
-                </form>
+                <h3>Collection by Products</h3>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($product_revenue as $revenue): ?>
+                            <tr>
+                                <td><?php echo $revenue['name_prod']; ?></td>
+                                <td><?php echo $revenue['total_revenue']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
-
-
-            <!--Footer-->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav>
-                        <ul class="footer-menu">
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-center">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            <a href="http://www.creative-tim.com">Panel Admin</a>, Derechos reservados
-                        </p>
-                    </nav>
-                </div>
-            </footer>
         </div>
     </div>
 
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart/js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
-<!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="../assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!--  Chartist Plugin  -->
-<script src="../assets/js/plugins/chartist.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="../assets/js/plugins/bootstrap-notify.js"></script>
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
-<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/js/demo.js"></script>
 
 </html>

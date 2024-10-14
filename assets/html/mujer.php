@@ -1,46 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Document</title>
+    <title>Mujer</title>
 </head>
+
 <body>
-    <header>
-        <label for="btn-nav" class="btn-nav"><i class='bx bx-menu'></i></label>
-        <input type="checkbox" id="btn-nav">
-        <div class="nav-container">
-            <nav>
-                <ul class="navi">
-                    <li><a href="/index.html">Inicio</a></li>
-                    <li><a href="/assets/html/mujer.html">Productos</a></li>
-                    <li><a href="/assets/html/contacto.html">Contacto</a></li>
-                    <li><a href="https://www.instagram.com/coolfashionistachic?igsh=OXE1aHN2bXE2dDhy">Instagram</a></li>
-                    <li><a href="/assets/html/quienes-somos.html">Quienes Somos</a></li>
-                    <li><a href="">Crear Cuenta</a></li>
-                    <li><a href="">Iniciar Sesion</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="nav-bar">
-            <div id="search-bar" class="search">
-                <input id="searchInput" class="input-search" type="text" onkeyup="ProductsSearch()">
-                <button id="btn-search" class="btn-input"><i class='bx bx-search-alt-2'></i></button>
-            </div>
-            <div class="logo">
-                <a href=""><img src="/assets/img/viga-logo.png" alt=""></a>
-            </div>
-            <div class="shop">
-                <a href=""><i class='bx bx-shopping-bag'></i></a>
-                <span>0</span>
-            </div>
-        </div>
-        <div class="btn-wp">
-            <a href="https://api.whatsapp.com/send/?phone=5493516349683&text&type=phone_number&app_absent=0"><i class='bx bxl-whatsapp'></i></a>
-        </div>
-    </header>
+    <?php
+    include '../php/db/config.php';
+    ?>
     <main>
         <section>
             <div class="data4">
@@ -108,28 +80,28 @@
                     <h3>ALTO MODA CROP(8867)</h3>
                     <span>$71.300,00</span>
                 </div>
-                <div  class="element-card">
+                <div class="element-card">
                     <img src="/assets/img/f10.jpg" alt="">
                     <a href=""><i class='bx bx-shopping-bag'></i></a>
                     <h3>ALTO MODA HIGH RISE(8868)</h3>
                     <span>$89.400,00</span>
                 </div>
-                <div  class="element-card">
+                <div class="element-card">
                     <img src="/assets/img/f11.jpg" alt="">
                     <a href=""><i class='bx bx-shopping-bag'></i></a>
                     <h3>ALTO MODA LOW RISE(8869)</h3>
                     <span>$120.000,00</span>
                 </div>
-                <div  class="element-card">
+                <div class="element-card">
                     <img src="/assets/img/f12.jpg" alt="">
                     <a href=""><i class='bx bx-shopping-bag'></i></a>
                     <h3>ALTO MODA MID RISE(8870)</h3>
                     <span>$51.000,00</span>
-                </div>                                
+                </div>
             </div>
         </section>
     </main>
-    <footer>    
+    <footer>
         <div class="contact">
             <a href=""><i class='bx bxl-instagram'></i></a>
             <a href=""><i class='bx bxl-facebook'></i></a>
@@ -172,4 +144,5 @@
     </footer>
     <script src="/assets/js/script.js"></script>
 </body>
+
 </html>

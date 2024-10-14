@@ -152,3 +152,60 @@ CALL insert_customers('Sofía', 'Sánchez', '+543518901234', 'sofia.sanchez@gmai
 CALL insert_customers('Diego', 'Fernández', '+543519012345', 'diego.fernandez@hotmail.com');
 CALL insert_customers('Camila', 'Jiménez', '+543520123456', 'camila.jimenez@gmail.com');
 
+-- Ejemplo para la tabla Admins
+CALL insert_admins('admin2', 'admin2@example.com', 'password2');
+CALL insert_admins('admin3', 'admin3@example.com', 'password3');
+
+-- Ejemplo para la tabla Brand
+CALL insert_brand('Marca2', 'Descripción de Marca2');
+CALL insert_brand('Marca3', 'Descripción de Marca3');
+CALL insert_brand('Marca4', 'Descripción de Marca4');
+CALL insert_brand('Marca5', 'Descripción de Marca5');
+CALL insert_brand('Marca6', 'Descripción de Marca6');
+CALL insert_brand('Marca7', 'Descripción de Marca7');
+CALL insert_brand('Marca8', 'Descripción de Marca8');
+CALL insert_brand('Marca9', 'Descripción de Marca9');
+CALL insert_brand('Marca10', 'Descripción de Marca10');
+CALL insert_brand('Marca11', 'Descripción de Marca11');
+CALL insert_brand('Marca12', 'Descripción de Marca12');
+CALL insert_brand('Marca13', 'Descripción de Marca13');
+CALL insert_brand('Marca14', 'Descripción de Marca14');
+CALL insert_brand('Marca15', 'Descripción de Marca15');
+CALL insert_brand('Marca16', 'Descripción de Marca16');
+CALL insert_brand('Marca17', 'Descripción de Marca17');
+CALL insert_brand('Marca18', 'Descripción de Marca18');
+CALL insert_brand('Marca19', 'Descripción de Marca19');
+CALL insert_brand('Marca20', 'Descripción de Marca20');
+
+CALL insert_suppliers('Proveedor2', 'Calle Falsa 123', '+543512345678', 'proveedor2@example.com');
+CALL insert_suppliers('Proveedor3', 'Avenida Siempre Viva 742', '+543513456789', 'proveedor3@example.com');
+
+CALL insert_products('Producto2', 25000.00, 2, 2);
+CALL insert_products('Producto3', 30000.00, 3, 3);
+
+-- Ejemplo para la tabla Shop
+CALL insert_shop('Compra de Producto1', '2024-01-01 10:00:00', 1000.00, 1, 1, 1, 1);
+CALL insert_shop('Compra de Producto2', '2024-02-01 11:00:00', 2000.00, 2, 2, 2, 2);
+CALL insert_shop('Compra de Producto3', '2024-03-01 12:00:00', 3000.00, 3, 3, 3, 3);
+
+CALL insert_shop('Compra de ALTO MODA SLIM FIT(8859)', '2024-01-01 10:00:00', 54200.00, 1, 1, 1, 1);
+CALL insert_shop('Compra de ALTO MODA REGULAR FIT(8860)', '2024-01-02 11:00:00', 78900.00, 2, 2, 1, 1);
+CALL insert_shop('Compra de ALTO MODA BOOTCUT(8861)', '2024-01-03 12:00:00', 63750.00, 3, 3, 1, 1);
+CALL insert_shop('Compra de ALTO MODA STRAIGHT LEG(8862)', '2024-01-04 13:00:00', 92400.00, 4, 4, 1, 1);
+CALL insert_shop('Compra de ALTO MODA TAPERED(8863)', '2024-01-05 14:00:00', 110500.00, 5, 5, 1, 1);
+CALL insert_shop('Compra de ALTO MODA WIDE LEG(8864)', '2024-01-06 15:00:00', 68200.00, 6, 6, 1, 1);
+CALL insert_shop('Compra de ALTO MODA FLARE(8865)', '2024-01-07 16:00:00', 59900.00, 7, 7, 1, 1);
+CALL insert_shop('Compra de ALTO MODA RELAXED FIT(8866)', '2024-01-08 17:00:00', 103600.00, 8, 8, 1, 1);
+CALL insert_shop('Compra de ALTO MODA CROP(8867)', '2024-01-09 18:00:00', 71300.00, 9, 9, 1, 1);
+CALL insert_shop('Compra de ALTO MODA HIGH RISE(8868)', '2024-01-10 19:00:00', 89400.00, 10, 10, 1, 1);
+CALL insert_shop('Compra de ALTO MODA LOW RISE(8869)', '2024-01-11 20:00:00', 120000.00, 11, 11, 1, 1);
+CALL insert_shop('Compra de ALTO MODA MID RISE(8870)', '2024-01-12 21:00:00', 51000.00, 12, 12, 1, 1);
+
+CALL insert_shop('Compra de ALTO MODA SLIM FIT(8859)', '2024-02-01 10:00:00', 54200.00, 1, 2, 1, 1);
+CALL insert_shop('Compra de ALTO MODA REGULAR FIT(8860)', '2024-02-02 11:00:00', 78900.00, 2, 3, 1, 1);
+CALL insert_shop('Compra de ALTO MODA BOOTCUT(8861)', '2024-02-03 12:00:00', 63750.00, 3, 4, 1, 1);
+CALL insert_shop('Compra de ALTO MODA STRAIGHT LEG(8862)', '2024-02-04 13:00:00', 92400.00, 4, 5, 1, 1);
+CALL insert_shop('Compra de ALTO MODA TAPERED(8863)', '2024-02-05 14:00:00', 110500.00, 5, 6, 1, 1);
+CALL insert_shop('Compra de ALTO MODA WIDE LEG(8864)', '2024-02-06 15:00:00', 68200.00, 6, 7, 1, 1);
+CALL insert_shop('Compra de ALTO MODA FLARE(8865)', '2024-02-07 16:00:00', 59900.00, 7, 8, 1, 1);
+CALL insert_shop('Compra de ALTO MODA RELAXED FIT(8866)', '2024-02-08 17:00:00', 103600.00, 8, 9, 1, 1);

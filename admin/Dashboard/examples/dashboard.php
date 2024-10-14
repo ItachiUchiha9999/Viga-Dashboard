@@ -1,53 +1,3 @@
-<?php
-
-require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
-$conexion = Conexion::Conectar();
-if (!$conexion) {
-    die ("No se pudo restablecer la conexion con la base de datos");
-}
-
-$name = "";
-$price = "";
-$brand = "";
-$supp = "";
-
-$errorMessage = "";
-$successMessage = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST["name"];
-    $price = $_POST["price"];
-    $brand = $_POST["brand"];
-    $supp = $_POST["supp"];
-
-    do {
-        if (empty($name) || empty($price) || empty($brand) || empty($supp)) {
-            $errorMessage = "All the field are required";
-            break;
-        }
-
-        $sql = "INSERT INTO products (name_prod, price, brand_id, supp_id)
-                VALUES ('$name','$price','$brand','$supp')";
-        $result = $conexion->query($sql);
-        if (!$result) {
-            $errorMessage = "Invalid query" . $conexion->errorInfo();
-            break;
-        }
-
-        $name = "";
-        $price = "";
-        $brand = "";
-        $supp = "";
-
-        $successMessage = "Customer added correctly";
-
-        header("Location: ../examples/products.php");
-        exit;
-
-    } while (false);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,16 +6,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Panel Admin - Customers</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <title>Panel Admin</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+        name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <!-- CSS Files -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/style.css">
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/css/demo.css" rel="stylesheet" />
+
+    <style>
+        .chart-container {
+            max-width: 500px;
+            max-height: 500px;
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            margin: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -79,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                        Customers
+                        Panel Admin
                     </a>
                 </div>
                 <ul class="nav">
@@ -138,8 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> Table List </a>
-                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <a class="navbar-brand" href="#pablo"> Dashboard </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -180,7 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="http://example.com"
+                                    id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
                                     <span class="no-icon">Dropdown</span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -203,75 +169,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </nav>
             <!-- End Navbar -->
 
-            <!--Create customers-->
+            <!--Main-->
             <?php
-            if (!empty($errorMessage)) {
-                echo "
-                <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                    <strong>$errorMessage</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>
-                ";
+            require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
+
+            $conexion = Conexion::Conectar();
+            if (!$conexion) {
+                die("No se pudo restablecer la conexion con la base de datos");
             }
+            $sql = "SELECT Products.name_prod, SUM(Shop.total) as total_revenue
+                    FROM Shop
+                    JOIN Products
+                    ON Shop.products_id = Products.id_products
+                    GROUP BY Products.id_products";
 
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute();
+            $top_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convert data to JSON format for JavaScript
+            $productNames = json_encode(array_column($top_products, 'name_prod'));
+            $totalRevenues = json_encode(array_column($top_products, 'total_revenue'));
+
+            $sql2 = "SELECT name_custo, last_name as custo
+            FROM customers";
+            $stmt2 = $conexion->prepare($sql2);
+            $stmt2->execute();
+            $top_customers = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convert data to JSON format for JavaScript
+
+            $custo = json_encode(array_column($top_customers, 'name_custo'));
+            $custo_total = json_encode(array_column($top_customers, 'custo'));
+
+            $conexion = null;
             ?>
-
-            <div class="container my-5">
-                <h2>New Products</h2>
-                <form action="" method="post">
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Product</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <canvas id="myChart"></canvas>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Price</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <canvas id="myChart2"></canvas>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Brand</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="brand" value="<?php echo $brand; ?>">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-sm-3 col-form-label">Supplier</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="supp" value="<?php echo $supp; ?>">
-                        </div>
-                    </div>
-
-                    <?php
-                    if (!empty($successMessage)) {
-                        echo "
-                        <div class=\"row mb-3\">
-                            <div class=\"offset-sm-3 col-sm-6\">
-                                <div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">
-                                    <strong>$successMessage</strong>
-                                    <button type=\"button\" class=\"btn-close\" data-bs-dismiss='alert' aria-label=\"Close\"></button>
-                                </div>
-                            </div>
-                        </div>
-                        ";
-                    }
-                    ?>
-
-                    <div class="row mb-3">
-                        <div class="offset-sm-3 col-sm-3 d-grid">
-                            <button class="btn btn-primary">Submit</button>
-                        </div>
-                        <div class="col-sm-3 d-grid">
-                            <a href="../examples/products.php" class="btn btn-outline-primary" role="button">Cancel</a>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
 
-
-            <!--Footer-->
             <footer class="footer">
                 <div class="container-fluid">
                     <nav>
@@ -302,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            <a href="http://www.creative-tim.com">Panel Admin</a>, Derechos reservados
+                            <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
                         </p>
                     </nav>
                 </div>
@@ -310,22 +257,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: <?php echo $productNames; ?>,
+                datasets: [{
+                    label: 'Top 10 Products',
+                    data: <?php echo $totalRevenues; ?>,
+                    backgroundColor: ['#ff0000', '#83ab9a', '#5989d7', '#d4ed79'],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: <?php echo $custo; ?>,
+                datasets: [{
+                    label: 'Customers',
+                    data: <?php echo $totalRevenues; ?>,
+                    backgroundColor: ['#ff0000', '#83ab9a', '#5989d7', '#d4ed79'],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Charts Plugin -->
+    <script src="../assets/js/plugins/chartist.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+    <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+    <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/demo.js"></script>
 </body>
-<!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="../assets/js/plugins/bootstrap-switch.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!--  Chartist Plugin  -->
-<script src="../assets/js/plugins/chartist.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="../assets/js/plugins/bootstrap-notify.js"></script>
-<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
-<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/js/demo.js"></script>
 
 </html>

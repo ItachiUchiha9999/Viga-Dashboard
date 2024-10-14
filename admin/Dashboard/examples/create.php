@@ -3,7 +3,7 @@
 require_once("C:/laragon/www/Proyectos/Viga/php/connection.php");
 $conexion = Conexion::Conectar();
 if (!$conexion) {
-    die ("No se pudo restablecer la conexion con la base de datos");
+    die("No se pudo restablecer la conexion con la base de datos");
 }
 
 $name = "";
@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         header("Location: ../examples/customers.php");
         exit;
-
     } while (false);
 }
 ?>
@@ -84,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../examples/dashboard.html">
+                        <a class="nav-link" href="../examples/dashboard.php">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Home</p>
                         </a>
@@ -108,9 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/suppliers.php">
+                        <a class="nav-link" href="../examples/report.php">
                             <i class="nc-icon nc-delivery-fast"></i>
-                            <p>Suppliers</p>
+                            <p>Reports</p>
                         </a>
                     </li>
                     <li>
@@ -218,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="container my-5">
                 <h2>New Customers</h2>
-                <form action="" method="post">
+                <form name="customerForm" action="" method="post" onsubmit="return ValidForm();">
                     <div class="row mb-3">
                         <label for="" class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-6">
@@ -310,6 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
+
 </body>
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
@@ -327,5 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 <script src="../assets/js/demo.js"></script>
+
+<script src="/assets/js/script.js"></script>
 
 </html>
