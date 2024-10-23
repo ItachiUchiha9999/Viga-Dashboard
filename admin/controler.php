@@ -16,7 +16,7 @@ if (!empty($_POST["btningresar"])) {
         $sql->execute();
 
         if ($data = $sql->fetchObject()) {
-            header("Location: ../admin/Dashboard/examples\dashboard.html");
+            header("Location: ../admin/Dashboard/examples\dashboard.php");
         } else {
             echo "Acceso Denegado";
         }

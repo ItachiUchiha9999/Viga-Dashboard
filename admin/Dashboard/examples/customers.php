@@ -60,9 +60,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/maps.html">
-                            <i class="nc-icon nc-chat-round"></i>
-                            <p>Help</p>
+                        <a class="nav-link" href="../examples/promotions.php">
+                            <i class="nc-icon nc-tag-content"></i>
+                            <p>Promotions</p>
                         </a>
                     </li>
                     <li>
@@ -230,9 +230,7 @@
         });
     </script>
 
-    <script src="../assets/js/core/jquery.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0"></script>
 </body>

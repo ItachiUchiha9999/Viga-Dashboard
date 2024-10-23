@@ -105,9 +105,9 @@ $product_revenue = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/maps.html">
-                            <i class="nc-icon nc-chat-round"></i>
-                            <p>Help</p>
+                        <a class="nav-link" href="../examples/promotions.php">
+                            <i class="nc-icon nc-tag-content"></i>
+                            <p>Promotions</p>
                         </a>
                     </li>
                     <li>

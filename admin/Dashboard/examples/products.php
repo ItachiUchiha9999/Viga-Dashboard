@@ -60,9 +60,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/maps.html">
-                            <i class="nc-icon nc-chat-round"></i>
-                            <p>Help</p>
+                        <a class="nav-link" href="../examples/promotions.php">
+                            <i class="nc-icon nc-tag-content"></i>
+                            <p>Promotions</p>
                         </a>
                     </li>
                     <li>
@@ -203,24 +203,24 @@
                 <div class="container-fluid">
                     <nav>
                         <ul class="footer-menu">
-                            <li>
+                        <li>
                                 <a href="#">
                                     Home
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Company
+                                    User
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Portfolio
+                                    Reports
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Blog
+                                    Configuration
                                 </a>
                             </li>
                         </ul>
@@ -229,7 +229,7 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                            <a href="http://www.creative-tim.com">Panel Admin</a>, Derechos reservados
                         </p>
                     </nav>
                 </div>

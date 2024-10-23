@@ -63,6 +63,24 @@ CREATE TABLE Shop(
     FOREIGN KEY(brand_id) REFERENCES Brand(id_brand)
 );
 
+CREATE TABLE Promotions(
+    id_promo INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    descr TEXT,
+    tipo ENUM('descuento', '2x1', 'envios_gratis'),
+    valor DECIMAL(10,2),
+    fecha_ini DATE,
+    fecha_fin DATE
+);
+
+CREATE TABLE Product_promotions(
+    id_prod_pro INT AUTO_INCREMENT PRIMARY KEY,
+    products_id INT,
+    promotions_id INT,
+    FOREIGN KEY (products_id) REFERENCES Products(id_products),
+    FOREIGN KEY (promotions_id) REFERENCES Promotions(id_promo)
+);
+
 DELIMITER //
 
 CREATE PROCEDURE insert_user(IN p_username VARCHAR(250),

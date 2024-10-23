@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row mb-3">
                         <label for="" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+                            <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
                         </div>
                     </div>
 
@@ -276,24 +276,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="container-fluid">
                     <nav>
                         <ul class="footer-menu">
-                            <li>
+                        <li>
                                 <a href="#">
                                     Home
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Company
+                                    User
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Portfolio
+                                    Reports
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Blog
+                                    Configuration
                                 </a>
                             </li>
                         </ul>

@@ -132,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/maps.html">
-                            <i class="nc-icon nc-chat-round"></i>
-                            <p>Help</p>
+                        <a class="nav-link" href="../examples/promotions.php">
+                            <i class="nc-icon nc-tag-content"></i>
+                            <p>Promotions</p>
                         </a>
                     </li>
                     <li>
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     <div class="row mb-3">
                         <label for="" class="col-sm-3 col-form-label">Price</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
+                            <input type="number" class="form-control" name="price" value="<?php echo $price; ?>">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -295,24 +295,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <div class="container-fluid">
                     <nav>
                         <ul class="footer-menu">
-                            <li>
+                        <li>
                                 <a href="#">
                                     Home
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Company
+                                    User
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Portfolio
+                                    Reports
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Blog
+                                    Configuration
                                 </a>
                             </li>
                         </ul>

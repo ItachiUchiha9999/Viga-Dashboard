@@ -113,9 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../examples/maps.html">
-                            <i class="nc-icon nc-chat-round"></i>
-                            <p>Help</p>
+                        <a class="nav-link" href="../examples/promotions.php">
+                            <i class="nc-icon nc-tag-content"></i>
+                            <p>Promotions</p>
                         </a>
                     </li>
                     <li>
@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row mb-3">
                         <label for="" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+                            <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
                         </div>
                     </div>
 
@@ -282,17 +282,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </li>
                             <li>
                                 <a href="#">
-                                    Company
+                                    User
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Portfolio
+                                    Reports
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Blog
+                                    Configuration
                                 </a>
                             </li>
                         </ul>
